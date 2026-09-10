@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .notify-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .notify-table th {
+      background: #07072c;
+      color: white;
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .notify-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .notify-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .status-read {
+      color: green;
+      font-weight: 700;
+    }
+
+    .status-unread {
+      color: red;
+      font-weight: 700;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a href="{% url 'showindex' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+  </nav>
+
+  <!-- ── Notifications Section ── -->
+  <section class="auth-page simp">
+    <div class="auth-card fade-up" style="max-width:1200px;">
+      <h2>Notifications</h2>
+      <p class="subtitle">
+        View all notifications and message updates
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+        <table class="notify-table">
+          <tr>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th>Priority</th>
+            <th>Delete</th>
+          </tr>
+          {% for i in notifdict %}
+          <tr>
+            <td>{{ i.title }}</td>
+            <td style="min-width:300px; white-space:normal;">{{ i.message }}</td>
+            <td>{{ i.notification_date }}</td>
+            <td>{{ i.priority }}</td>
+            <td>
+              <a href="{% url 'delnotify' i.id %}" class="delete-btn">Delete</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+
+            <td colspan="5">
+              No notifications found
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

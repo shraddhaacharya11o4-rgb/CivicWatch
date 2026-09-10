@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Register for the Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>Register | Karnataka Grievance Portal</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    .form-group{
+      position: relative;
+      width:100%;
+      margin-bottom:18px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea{
+    width:100%;
+    padding:12px 15px;
+    font-size:16px;
+    border-radius:8px;
+    box-sizing:border-box;
+  }
+
+  #password{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+    border-radius:8px;
+  }
+
+  #password:hover {
+    border-color: #d4a843;
+    color: #d4a843;
+  }
+
+  #message{
+    display:none;
+    position:absolute;
+    left:calc(100% + 20px);
+    top:-10px;
+    width:280px;
+    background:#222;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.4);
+  }
+
+  #message::before{
+    content:"";
+    position:absolute;
+    left:-10px;
+    top:25px;
+    border-width:10px;
+    border-style:solid;
+    border-color:transparent #222 transparent transparent;
+  }
+
+  @media (max-width:768px){
+    #message{
+        position:relative;
+        left:0;
+        top:10px;
+        width:100%;
+    }
+    #message::before{
+        display:none;
+    }
+}
+
+  .valid{
+    color:#32cd32;
+    font-weight:bold;
+  }
+
+  .invalid{
+    color:#bbb;
+  }
+
+  .valid::before{
+    content:"✔ ";
+  }
+
+  .invalid::before{
+    content:" ";
+  }
+
+    .password-box{
+    position:relative;
+  }
+
+  .password-box input{
+    width:100%;
+    padding-right:45px;
+  }
+
+  .toggle-password{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    cursor:pointer;
+    font-size:18px;
+    padding:0;
+  }
+
+  .toggle-password:hover{
+    color:#d4a843;
+  }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="{% url 'showindex' %}">Home</a></li>
+      <li><a href="{% url 'logcheck' %}" class="btn-login">Login</a></li>
+      <li><a href="{% url 'insertregister' %}" class="btn-register">Register</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- ── Register Section ── -->
+  <section class="auth-page register-page">
+
+    <div class="auth-card fade-up" style="max-width:550px;">
+
+      <h2>Register Account</h2>
+
+      <p class="subtitle">
+        Join the Karnataka Grievance Portal to file and track complaints
+      </p>
+
+      {% if messages %}
+        {% for message in messages %}
+          <script>
+            alert("{{ message }}");
+          </script>
+        {% endfor %}
+      {% endif %}
+
+      <form action="" method="post" id="registerForm">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="t1" placeholder="Enter full name" pattern="[a-zA-Z\s]+" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" name="t2" placeholder="you@example.com" pattern="^[a-z0-9_+.-]+@[a-z]+\.[a-z]{2,3}$" title="Enter valid email address" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+              <div class="password-box">
+                <input type="password" id="password" name="t3" placeholder="Create password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,10}$"
+                required>
+               <button type="button" class="toggle-password" onclick="togglePassword()"> <i id="eyeIcon" class="fa-solid fa-eye"></i> </button>
+              </div>
+          <div id="message">
+            <p id="length" class="invalid">Must be between 8-10 characters</p>
+            <p id="letter" class="invalid">Use upper and lower case letters</p>
+            <p id="number" class="invalid">Use a number</p>
+            <p id="special" class="invalid">Use a special character[@$!%*?&]</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="text" name="t4" placeholder="+91 XXXXX XXXXX" pattern="[6-9]{1}[0-9]{9}" title="Enter valid 10-digit mobile number" required>
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+
+          <select name="t5" required>
+
+            <option value="" disabled selected>Select your city</option>
+
+            <option>Bangalore Urban</option>
+            <option>Bangalore Rural</option>
+            <option>Mysuru</option>
+            <option>Mangaluru</option>
+            <option>Belagavi</option>
+            <option>Hubli-Dharwad</option>
+            <option>Kalaburagi</option>
+            <option>Tumkur</option>
+            <option>Shimoga</option>
+            <option>Davangere</option>
+            <option>Bellary</option>
+            <option>Raichur</option>
+            <option>Hassan</option>
+            <option>Mandya</option>
+            <option>Udupi</option>
+            <option>Chikmagalur</option>
+            <option>Kodagu</option>
+
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <textarea name="t6" placeholder="Enter address" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Register Account
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+<script>
+
+const password = document.getElementById("password");
+const message = document.getElementById("message");
+
+// Show/Hide password
+function togglePassword() {
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    }
+}
+
+// Show/Hide validation popup
+document.addEventListener("click", function(e){
+    const passwordBox = document.querySelector(".password-box");
+    if(passwordBox.contains(e.target)){
+        message.style.display = "block";
+    }else{
+        message.style.display = "none";
+    }
+});
+
+// Live validation
+password.addEventListener("input", checkPassword);
+
+// Prevent spaces
+password.addEventListener("keydown", function(e){
+    if(e.key === " "){
+        e.preventDefault();
+    }
+});
+
+function checkPassword(){
+    document.getElementById("length").className =
+        (password.value.length >= 8 && password.value.length <= 10)
+        ? "valid" : "invalid";
+
+    document.getElementById("letter").className =
+        (/[a-z]/.test(password.value) && /[A-Z]/.test(password.value))
+        ? "valid" : "invalid";
+
+    document.getElementById("number").className =
+        /\d/.test(password.value)
+        ? "valid" : "invalid";
+
+    document.getElementById("special").className =
+        /[@$!%*?&]/.test(password.value)
+        ? "valid" : "invalid";
+}
+
+</script>
+</body>
+</html>

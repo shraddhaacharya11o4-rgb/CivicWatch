@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CivicWatch AI Assistant</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        .chat-container {
+            width: 700px;
+            margin: 120px auto 40px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #111133;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+        }
+
+        .chat-header p {
+            margin: 5px 0 0;
+            font-size: 13px;
+        }
+
+        .chat-body {
+            padding: 20px;
+             height: 450px;
+             overflow-y: auto;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            margin-left: 50px;
+        }
+
+        .bot-message {
+            background: #f1f1f1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            margin-right: 50px;
+        }
+
+        .chat-form {
+            display: flex;
+            border-top: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        .chat-form input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .chat-form button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #111133;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chat-form button:hover {
+            background: #222255;
+        }
+
+        .suggested-questions {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.suggestion {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.suggestion:hover {
+    background: #f1f1f1;
+}
+    </style>
+    <!-- Django Static CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- 🔷 Navbar -->
+  <nav class="navbar">
+    <a href="{% url 'public_home' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+  </nav>
+
+<div class="chat-container">
+    <div class="chat-header">
+    <h2>🤖 CivicWatch AI Assistant</h2>
+    <p>How can I help you?</p>
+
+    <a href="{% url 'clear_chat' %}" id="clear-chat"
+       style="color:white; font-size:13px; text-decoration:none;">
+       Clear Chat
+    </a>
+</div>
+
+<div class="suggested-questions">
+
+    <button type="button" class="suggestion">
+        What is my grievance status?
+    </button>
+
+    <button type="button" class="suggestion">
+        Who is handling my grievance?
+    </button>
+
+    <button type="button" class="suggestion">
+        What is the latest update?
+    </button>
+
+    <button type="button" class="suggestion">
+        Show my notifications
+    </button>
+
+</div>
+
+    <div class="chat-body">
+    {% for message in chat_history %}
+        {% if message.role == "user" %}
+            <div class="user-message">
+                <strong>You:</strong>
+                {{ message.content }}
+            </div>
+        {% else %}
+            <div class="bot-message">
+                <strong>AI Assistant:</strong>
+                {{ message.content }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <form method="POST" class="chat-form">
+        {% csrf_token %}
+        <input type="text" name="message" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    const chatBody = document.querySelector(".chat-body");
+    const chatForm = document.querySelector(".chat-form");
+    const messageInput = document.querySelector(
+    ".chat-form input[name='message']");
+
+    const suggestions = document.querySelectorAll(".suggestion");
+
+suggestions.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        messageInput.value = button.textContent.trim();
+
+        chatForm.dispatchEvent(new Event("submit"));
+
+    });
+
+});
+
+    chatBody.scrollTop = chatBody.scrollHeight;
+    const clearChat = document.querySelector("#clear-chat");
+
+clearChat.addEventListener("click", function(event) {
+
+    event.preventDefault();
+
+    chatBody.innerHTML = "";
+
+    window.location.href = "{% url 'clear_chat' %}";
+
+});
+
+    chatForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const userMessage = messageInput.value.trim();
+
+        if (userMessage === "") {
+            return;
+        }
+
+        const userDiv = document.createElement("div");
+
+        userDiv.className = "user-message";
+
+        userDiv.innerHTML =
+            "<strong>You:</strong> " + userMessage;
+
+        chatBody.appendChild(userDiv);
+
+        messageInput.value = "";
+
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+
+        const loadingDiv = document.createElement("div");
+
+        loadingDiv.className = "bot-message";
+
+        loadingDiv.id = "loading-message";
+
+        loadingDiv.innerHTML =
+            "<strong>AI Assistant:</strong> AI is thinking...";
+
+        chatBody.appendChild(loadingDiv);
+
+        chatBody.scrollTop = chatBody.scrollHeight;
+
+
+        fetch("{% url 'chatbot_message' %}", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-CSRFToken": document.querySelector(
+                    "[name=csrfmiddlewaretoken]"
+                ).value
+            },
+
+            body: "message=" + encodeURIComponent(userMessage)
+        })
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            loadingDiv.remove();
+
+            const botDiv = document.createElement("div");
+
+            botDiv.className = "bot-message";
+
+            botDiv.innerHTML = "<strong>AI Assistant:</strong> ";
+
+            const responseText = document.createTextNode(data.response);
+
+            botDiv.appendChild(responseText);
+
+            chatBody.appendChild(botDiv);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+        })
+
+        .catch(error => {
+
+            loadingDiv.remove();
+
+            const errorDiv = document.createElement("div");
+
+            errorDiv.className = "bot-message";
+
+            errorDiv.innerHTML =
+                "<strong>AI Assistant:</strong> Something went wrong.";
+
+            chatBody.appendChild(errorDiv);
+
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            console.error(error);
+        });
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback List | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    /* Drop-Down */
+        .dropdown {
+         position: relative;
+         display: inline-block;
+         }
+
+        .dropbtn {
+        background-color: transparent;
+        color: white;
+        padding: 10px 16px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        border-bottom: 1px solid transparent;
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: auto;
+        right: 0;
+        background-color: #111133;
+        min-width: 200px;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        border-radius: 5px;
+        overflow: hidden;
+        z-index: 1;
+        }
+
+        .dropdown-content a {
+        color: white;
+        padding: 12px 15px;
+        text-decoration: none;
+        display: block;
+        font-size: 14px;
+        }
+
+        .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+        display: block;
+        }
+
+    .feed-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .feed-table th {
+      background: #07072c;
+      color: white;
+      padding: 16px;
+      font-size: 15px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .feed-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .feed-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% if request.session.usertype == 'officer' %}
+
+        <li class="nav-item">
+                    <a href="{% url 'officer_home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'insertinfrasset' %}" class="nav-link">Register Asset</a>
+                </li>
+                 <li class="nav-item">
+                    <a href="{% url 'insertinframonitor' %}" class="nav-link">Monitoring</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'insertgrievassign' %}" class="nav-link">Grievance Assign</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'insertgrievupdate' %}" class="nav-link">Grievance Update</a>
+                </li>
+
+    <li class="nav-item">
+           <div class="dropdown">
+               <a class="dropbtn">View Status</a>
+               <div class="dropdown-content">
+                   <a href="{% url 'viewgriev' %}">Grievance Status</a>
+                   <a href="{% url 'viewdocument' %}">View Document</a>
+                    <a href="{% url 'viewinmonitor' %}">Monitoring Records</a>
+                   <a href="{% url 'viewfeed' %}">View Feedback</a>
+               </div>
+           </div>
+    </li>
+    <li class="nav-item">
+           <div class="dropdown">
+               <a class="dropbtn" title="More">☰</a>
+               <div class="dropdown-content">
+                   <a href="{% url 'changepassword' %}">Change Password</a>
+                   <a href="{% url 'logcheck' %}">Logout</a>
+               </div>
+           </div>
+    </li>
+
+      {% elif request.session.usertype == 'admin' %}
+     <li class="nav-item">
+        <a href="{% url 'govt_home' %}" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn">Manage</a>
+          <div class="dropdown-content">
+            <a href="{% url 'insertdepartment' %}">Register Department</a>
+            <a href="{% url 'insertgrevcat' %}">Register Grievance Category</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" >View Status</a>
+          <div class="dropdown-content">
+            <a href="{% url 'viewdepartment' %}">Department List</a>
+            <a href="{% url 'viewgriev' %}">Grievance Status</a>
+            <a href="{% url 'viewgassign' %}">Assignments</a>
+            <a href="{% url 'viewgupdate' %}">View Updates</a>
+            <a href="{% url 'viewinmonitor' %}">Monitoring Records</a>
+            <a href="{% url 'viewfeed' %}">View Feedback </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" title="More">☰</a>
+          <div class="dropdown-content">
+            <a href="{% url 'changepassword' %}">Change Password</a>
+            <a href="{% url 'logcheck' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+    {% endif %}
+
+    </ul>
+  </nav>
+
+  <!-- ── Feedback List Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:1200px;">
+
+      <h2>Feedback List</h2>
+
+      <p class="subtitle">
+        View citizen feedback and grievance ratings
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+
+        <table class="feed-table">
+
+          <tr>
+
+            <th>Citizen</th>
+
+            <th>Grievance</th>
+
+            <th>Rating</th>
+
+            <th>Comments</th>
+
+            <th>Date</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+          {% for i in feeddict %}
+
+          <tr>
+
+            <td>{{ i.citizen }}</td>
+
+            <td>{{ i.grievance }}</td>
+
+            <td>{{ i.rating }}</td>
+
+            <td>{{ i.comments|truncatechars:50 }}</td>
+
+            <td>{{ i.feedback_date }}</td>
+
+            <td>
+
+              <a href="{% url 'delfeed' i.id %}" class="delete-btn">
+
+                Delete
+
+              </a>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="6">
+              No feedback available
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

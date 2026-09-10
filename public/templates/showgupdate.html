@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Updates | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    .update-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .update-table th {
+      background: #07072c;
+      color: white;
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .update-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .update-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .update-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+        /* Drop-Down */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 10px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: auto;
+    right: 0;
+    background-color: #111133;
+    min-width: 200px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: white;
+    padding: 12px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'govt_home' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+
+    {% if request.session.usertype == 'citizen' %}
+
+    <!-- Citizen Menu -->
+   <li class="nav-item">
+                    <a href="{% url 'public_home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'insertgrievance' %}" class="nav-link" title="Submit Complaint">Submit Grievance</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'insertdocument' %}" class="nav-link">Upload Documents</a>
+                </li>
+       <li class="nav-item">
+           <div class="dropdown">
+               <a class="dropbtn" >View Status</a>
+               <div class="dropdown-content">
+                   <a href="{% url 'viewdepartment' %}">Department Status</a>
+                    <a href="{% url 'viewgrevcat' %}">Grievance Category</a>
+                    <a href="{% url 'viewgupdate' %}">Grievance Updates</a>
+               </div>
+           </div>
+       </li>
+
+        <li class="nav-item">
+            <a href="{% url 'chatbot' %}" class="nav-link">🤖 AI Assistant</a>
+        </li>
+
+       <li class="nav-item">
+           <a href="{% url 'viewnotify' %}" class="nav-link" title="Notification">🔔</a>
+       </li>
+
+        <li class="nav-item">
+           <div class="dropdown">
+               <a class="dropbtn" title="More">☰</a>
+               <div class="dropdown-content">
+                   <a href="{% url 'changepassword' %}">Change Password</a>
+                    <a href="{% url 'insertfeedback' %}">Feedback</a>
+                    <a href="{% url 'logcheck' %}" class="nav-link">Logout</a>
+               </div>
+           </div>
+       </li>
+
+        {% elif request.session.usertype == 'admin' %}
+        <!-- Admin Menu -->
+         <li class="nav-item">
+        <a href="{% url 'govt_home' %}" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn">Manage</a>
+          <div class="dropdown-content">
+            <a href="{% url 'insertdepartment' %}">Register Department</a>
+            <a href="{% url 'insertgrevcat' %}">Register Grievance Category</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" >View Status</a>
+          <div class="dropdown-content">
+            <a href="{% url 'viewdepartment' %}">Department List</a>
+            <a href="{% url 'viewgriev' %}">Grievance Status</a>
+            <a href="{% url 'viewgassign' %}">Assignments</a>
+            <a href="{% url 'viewgupdate' %}">View Updates</a>
+            <a href="{% url 'viewinmonitor' %}">Monitoring Records</a>
+            <a href="{% url 'viewfeed' %}">View Feedback </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" title="More">☰</a>
+          <div class="dropdown-content">
+            <a href="{% url 'changepassword' %}">Change Password</a>
+            <a href="{% url 'logcheck' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+        {% endif %}
+    </ul>
+  </nav>
+
+  <!-- ── Grievance Updates Section ── -->
+  <section class="auth-page simp">
+    <div class="auth-card fade-up" style="max-width:1300px;">
+      <h2>Grievance Updates</h2>
+      <p class="subtitle">
+        View all grievance progress updates and status reports
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+        <table class="update-table">
+          <tr>
+              <th>Grievance ID</th>
+              <th>Officer</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Photo</th>
+              <th>Status</th>
+              {% if request.session.usertype == 'admin' %}
+                <th>Delete</th>
+              {% endif %}
+          </tr>
+
+          {% for i in gupdatedict %}
+          <tr>
+            <td>{{ i.grievance }}</td>
+            <td>{{ i.officer }}</td>
+            <td>{{ i.update_date }}</td>
+            <td style="min-width:300px; white-space:normal;">{{ i.description }}</td>
+            <td>
+              {% if i.photo %}
+              <img src="{{ i.photo.url }}" class="update-img">
+              {% else %}
+              No Photo
+              {% endif %}
+            </td>
+
+            <td>
+                {% if i.status == "Pending" %}
+                <span class="status-pending">Pending</span>
+                {% elif i.status == "In Progress" %}
+                <span class="status-progress">In Progress</span>
+                {% elif i.status == "Resolved" or i.status == "Completed" %}
+                <span class="status-resolved">{{ i.status }}</span>
+                {% endif %}
+            </td>
+
+              {% if request.session.usertype == 'admin' %}
+              <td>
+                  <a href="{% url 'delgupdate' i.id %}" class="delete-btn">Delete</a>
+              </td>
+              {% endif %}
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="{% if request.session.usertype == 'admin' %}7{% else %}6{% endif %}">
+              No updates found
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

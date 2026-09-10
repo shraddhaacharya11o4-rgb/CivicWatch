@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infrastructure Asset | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% include 'officer_menu.html' %}
+    </ul>
+
+  </nav>
+
+  <!-- ── Infrastructure Asset Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:550px;">
+
+      <h2>Infrastructure Asset</h2>
+
+      <p class="subtitle">
+        Register and manage infrastructure asset details
+      </p>
+
+      <!-- Django Form -->
+      <form method="POST" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Asset Name</label>
+          <input type="text" name="t1" placeholder="e.g Bridge No.12" required>
+        </div>
+
+        <div class="form-group">
+          <label>Asset Type</label>
+          <select name="t2" required>
+            <option value="">Select Asset Type</option>
+            <!-- Road Department -->
+            <option>Road</option>
+            <option>Bridge</option>
+            <option>Footpath</option>
+
+            <!-- Water Supply Department -->
+            <option>Water Pipeline</option>
+            <option>Water Tank</option>
+            <option>Borewell</option>
+
+            <!-- Electricity Department -->
+            <option>Street Light</option>
+            <option>Electric Pole</option>
+            <option>Traffic Signal</option>
+
+            <!-- Sanitation Department -->
+            <option>Drainage</option>
+            <option>Garbage Bin</option>
+            <option>Sewage Line</option>
+            <option>Public Toilet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" name="t3" placeholder="Enter location" required>
+        </div>
+
+        <div class="form-group">
+          <label>Department</label>
+          <select name="t4" required>
+            <option value="">Select Department</option>
+            <option>Road Department</option>
+            <option>Water Supply Board</option>
+            <option>Electricity Department</option>
+            <option>Sanitation Department</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Installation Date</label>
+          <input type="date" name="t5" required>
+        </div>
+
+        <div class="form-group">
+          <label>Last Maintenance Date</label>
+          <input type="date" name="t6">
+        </div>
+
+        <div class="form-group">
+          <label>Condition Status</label>
+          <select name="t7" required>
+            <option>Excellent</option>
+            <option>Good</option>
+            <option>Fair</option>
+            <option>Poor</option>
+            <option>Critical</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Upload Photo</label>
+          <input type="file" accept="image/*" name="t8">
+        </div>
+
+        <button type="submit" class="btn-submit"> Submit </button>
+      </form>
+    </div>
+  </section>
+</script>
+{% if msg %}
+<script>
+    alert("{{ msg }}");
+</script>
+{% endif %}
+</body>
+</html>

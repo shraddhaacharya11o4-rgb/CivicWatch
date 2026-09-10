@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documents | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .doc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .doc-table th {
+      background: #07072c;
+      color: white;
+      padding: 16px;
+      font-size: 15px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .doc-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .doc-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .file-link {
+      color: #003366;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .file-link:hover {
+      text-decoration: underline;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% include "officer_menu.html" %}
+    </ul>
+
+  </nav>
+
+  <!-- ── Documents Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:1250px;">
+
+      <h2>Uploaded Documents</h2>
+
+      <p class="subtitle">
+        View and manage uploaded grievance documents
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+
+        <table class="doc-table">
+
+          <tr>
+
+            <th>User</th>
+
+            <th>Grievance</th>
+
+            <th>Document Type</th>
+
+            <th>Description</th>
+
+            <th>File</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+          {% for i in docdict %}
+
+          <tr>
+
+            <td>{{ i.user }}</td>
+
+            <td>{{ i.grievance }}</td>
+
+            <td>{{ i.document_type }}</td>
+
+            <td>{{ i.description|truncatechars:50 }}</td>
+
+            <td>
+
+              {% if i.document_file %}
+
+              <a href="{{ i.document_file.url }}" class="file-link">
+
+                View File
+
+              </a>
+
+              {% else %}
+
+              No File
+
+              {% endif %}
+
+            </td>
+
+            <td>
+
+              <a href="{% url 'deldoc' i.id %}" class="delete-btn">
+
+                Delete
+
+              </a>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="6">
+              No documents found
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

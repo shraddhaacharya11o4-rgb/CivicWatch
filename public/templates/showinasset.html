@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infrastructure Assets | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .asset-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .asset-table th {
+      background: #07072c;
+      color: white;
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .asset-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .asset-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .asset-img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="{% url 'showindex' %}">Home</a></li>
+      <li><a href="{% url 'logcheck' %}" class="btn-login">Login</a></li>
+      <li><a href="{% url 'insertregister' %}" class="btn-register">Register</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- ── Infrastructure Assets Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:1400px;">
+
+      <h2>Infrastructure Assets</h2>
+
+      <p class="subtitle">
+        View and manage registered infrastructure assets
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+
+        <table class="asset-table">
+
+          <tr>
+
+            <th>Asset Name</th>
+
+            <th>Type</th>
+
+            <th>Location</th>
+
+            <th>Department</th>
+
+            <th>Installation Date</th>
+
+            <th>Last Maintenance</th>
+
+            <th>Condition</th>
+
+            <th>Photo</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+          {% for i in inasdict %}
+
+          <tr>
+
+            <td>{{ i.asset_name }}</td>
+
+            <td>{{ i.asset_type }}</td>
+
+            <td>{{ i.location }}</td>
+
+            <td>{{ i.department }}</td>
+
+            <td>{{ i.installation_date }}</td>
+
+            <td>{{ i.last_maintenance_date }}</td>
+
+            <td>{{ i.condition_status }}</td>
+
+            <td>
+
+              {% if i.photo %}
+
+              <img src="{{ i.photo.url }}" class="asset-img">
+
+              {% else %}
+
+              No Photo
+
+              {% endif %}
+
+            </td>
+
+            <td>
+
+              <a href="{% url 'delinasset' i.id %}" class="delete-btn">
+
+                Delete
+
+              </a>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="9">
+              No assets found
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

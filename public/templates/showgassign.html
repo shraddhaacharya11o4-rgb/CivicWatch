@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Assignments | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .assign-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .assign-table th {
+      background: #07072c;
+      color: white;
+      padding: 16px;
+      font-size: 15px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .assign-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .assign-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% include 'govt_menu.html' %}
+    </ul>
+
+  </nav>
+
+  <!-- ── Grievance Assignment List Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:1300px;">
+
+      <h2>Grievance Assignments</h2>
+
+      <p class="subtitle">
+        View assigned grievances and officer details
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+
+        <table class="assign-table">
+
+          <tr>
+
+            <th>Grievance</th>
+
+            <th>Assigned Officer</th>
+
+            <th>Department</th>
+
+            <th>Assigned Date</th>
+
+            <th>Expected Resolution</th>
+
+            <th>Status</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+          {% for i in gassdict %}
+
+          <tr>
+
+            <td>{{ i.grievance }}</td>
+
+            <td>{{ i.assigned_officer }}</td>
+
+            <td>{{ i.department }}</td>
+
+            <td>{{ i.assigned_date }}</td>
+
+            <td>{{ i.expected_resolution_date }}</td>
+
+            <td>{{ i.status }}</td>
+
+            <td>
+
+              <a href="{% url 'delgassign' i.id %}" class="delete-btn">
+
+                Delete
+
+              </a>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="7">
+              No assignments found
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

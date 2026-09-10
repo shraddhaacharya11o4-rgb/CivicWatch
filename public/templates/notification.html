@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% include "officer_menu.html" %}
+    </ul>
+
+  </nav>
+
+  <!-- ── Notification Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:500px;">
+
+      <h2>Notification</h2>
+
+      <p class="subtitle">
+        Send notifications and important updates to users
+      </p>
+
+      <!-- Django Form -->
+      <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Recipient</label>
+          <input type="text" name="t1" placeholder="Enter username" required>
+        </div>
+
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" name="t2" placeholder="Enter notification title" required >
+        </div>
+
+        <div class="form-group">
+          <label>Message</label>
+          <textarea name="t3" placeholder="Enter notification message" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Notification Date</label>
+          <input type="date" name="t4">
+        </div>
+
+        <div class="form-group">
+          <label>Priority</label>
+          <select name="t5">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+            <option>Urgent</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Send Notification
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

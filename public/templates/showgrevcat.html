@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Category List | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .category-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .category-table th {
+      background: #07072c;
+      color: white;
+      padding: 16px;
+      font-size: 15px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .category-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 14px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .category-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+
+  </nav>
+
+  <!-- ── Category List Section ── -->
+  <section class="auth-page simp">
+    <div class="auth-card fade-up" style="max-width:1200px;">
+      <h2>Grievance Categories</h2>
+      <p class="subtitle">
+        View all grievance categories and department details
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+        <table class="category-table">
+          <tr>
+            <th>Category Name</th>
+            <th>Department</th>
+            <th>Description</th>
+            <th>Priority</th>
+          </tr>
+
+          {% for i in gcatdict %}
+          <tr>
+            <td>{{ i.category_name }}</td>
+            <td>{{ i.department }}</td>
+            <td>{{ i.description }}</td>
+            <td>{{ i.priority_level }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">
+              No categories found
+            </td>
+          </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

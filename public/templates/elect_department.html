@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>CivicWatch | Electricity Department</title>
+
+  <!-- Django Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- 🔷 Navbar -->
+<nav class="navbar">
+    <a href="{% url 'public_home' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- ABOUT -->
+    <div class="info-card fade-up">
+
+        <h2>About Electricity Department</h2>
+
+        <p>
+            The Electricity Department is responsible for managing and maintaining
+            public electrical infrastructure, ensuring uninterrupted power supply,
+            and monitoring electrical safety systems across urban and rural areas.
+        </p>
+
+        <p>
+            The department handles complaints related to streetlight failures,
+            power interruptions, damaged electric poles, loose electrical wires,
+            transformer issues, and public electrical hazards.
+        </p>
+
+        <p>
+            Through the CivicWatch platform, citizens can report electricity-related
+            issues online by uploading complaint details, photographs,
+            and exact locations for quick resolution and monitoring.
+        </p>
+
+    </div>
+
+    <!-- KEY RESPONSIBILITIES -->
+    <div class="info-card fade-up">
+
+        <h2>Key Responsibilities</h2>
+
+        <div class="services">
+
+            <div class="service-box">
+                <h3>Streetlight Maintenance</h3>
+
+                <p>
+                    Monitoring and repairing damaged or non-functional
+                    streetlights to improve public safety.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Power Supply Monitoring</h3>
+
+                <p>
+                    Ensuring continuous and stable electricity supply
+                    across residential and public areas.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Electrical Safety Inspection</h3>
+
+                <p>
+                    Inspecting electrical poles, transformers,
+                    and wiring systems to prevent accidents and hazards.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Emergency Electrical Services</h3>
+
+                <p>
+                    Providing emergency support during power failures,
+                    short circuits, and electrical breakdowns.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICES PROVIDED -->
+    <div class="info-card fade-up">
+
+        <h2>Services Provided to Citizens</h2>
+
+        <p>
+            The Electricity Department provides several important public services
+            through the CivicWatch grievance management system:
+        </p>
+
+        <br>
+
+        <ul style="line-height:2; padding-left:20px; color:#444;">
+
+            <li>Online reporting of streetlight failures</li>
+
+            <li>Monitoring public power supply interruptions</li>
+
+            <li>Electrical pole and transformer maintenance tracking</li>
+
+            <li>Complaint registration for damaged electrical wires</li>
+
+            <li>Public electrical safety inspections and issue reporting</li>
+
+            <li>Real-time grievance tracking and status updates</li>
+
+            <li>Emergency electrical maintenance notifications</li>
+
+        </ul>
+
+    </div>
+
+    <!-- IMPORTANCE -->
+    <div class="info-card fade-up">
+
+        <h2>Importance of the Department</h2>
+
+        <p>
+            Efficient electrical infrastructure is essential for public safety,
+            economic development, transportation systems, and urban growth.
+            The Electricity Department plays a major role in maintaining
+            safe and reliable electrical services for citizens.
+        </p>
+
+        <p>
+            CivicWatch improves transparency and communication by allowing citizens
+            to instantly report electrical issues and monitor government
+            maintenance activities and complaint resolution progress in real-time.
+        </p>
+
+    </div>
+
+    <!-- REPORT BUTTON -->
+    <div class="btn-area">
+
+        <a href="{% url 'insertgrievance' %}" class="btn-primary">
+            Report Electricity Issue
+        </a>
+
+    </div>
+
+</div>
+
+<!-- 🔷 Footer -->
+<footer class="footer">
+    <p>
+      &copy; 2026 CivicWatch — Government of Karnataka. All rights reserved.
+    </p>
+</footer>
+
+</body>
+</html>

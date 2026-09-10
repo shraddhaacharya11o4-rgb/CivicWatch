@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Assignment | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'officer_menu.html' %}
+    </ul>
+  </nav>
+
+  <!-- ── Grievance Assignment Section ── -->
+  <section class="auth-page simp">
+    <div class="auth-card fade-up" style="max-width:550px;">
+      <h2>Grievance Assignment</h2>
+      <p class="subtitle"> Assign grievances to officers and departments</p>
+
+      <!-- Django Form -->
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Grievance ID</label>
+          <select name="t1" required>
+            <option value="" disabled selected>-- Select Grievance --</option>
+            {% for g in grievances %}
+            <option value="{{ g.grievance_id }}">
+              {{ g.grievance_id }} - {{ g.title }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Assigned Officer</label>
+          <select name="t2" required>
+            <option value="" disabled selected>Select Officer</option>
+            <option>Rahul Patil</option>
+            <option>Sneha Joshi</option>
+            <option>Amit Kumar</option>
+            <option>Ramesh Gowda</option>
+            <option>Anjali Desai</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Department</label>
+          <select name="t3" required>
+            <option value="" disabled selected>Select Department</option>
+            <option>Road Department</option>
+            <option>Water Supply Board</option>
+            <option>Electricity Department</option>
+            <option>Sanitation Department</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Assigned Date</label>
+          <input type="date" name="t4" required>
+        </div>
+
+        <div class="form-group">
+          <label>Expected Resolution Date</label>
+          <input type="date" name="t5" required>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select name="t6" required>
+            <option value="" disabled selected>-- Select --</option>
+            <option value="Assigned">Assigned</option>
+            <option> Under Review </option>
+            <option value="In Progress">In Progress</option>
+            <option> Resolved </option>
+            <option value="Completed">Closed</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit</button>
+      </form>
+    </div>
+  </section>
+</script>
+{% if msg %}
+<script>
+    alert("{{ msg }}");
+</script>
+{% endif %}
+</body>
+</html>

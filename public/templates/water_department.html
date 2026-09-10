@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>CivicWatch | Water Supply Department</title>
+
+  <!-- Django Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- 🔷 Navbar -->
+<nav class="navbar">
+    <a href="{% url 'public_home' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- ABOUT -->
+    <div class="info-card fade-up">
+
+        <h2>About Water Supply Department</h2>
+
+        <p>
+            The Water Supply Department is responsible for managing water distribution,
+            monitoring pipeline systems, maintaining water quality,
+            and ensuring continuous water supply across urban and rural regions.
+        </p>
+
+        <p>
+            The department handles complaints related to water leakage,
+            pipe damage, low water pressure, drainage overflow,
+            contaminated water supply, and interrupted water services.
+        </p>
+
+        <p>
+            Through the CivicWatch platform, citizens can easily report
+            water-related issues online by submitting complaints,
+            uploading supporting photographs, and tracking grievance status in real-time.
+        </p>
+
+    </div>
+
+    <!-- KEY RESPONSIBILITIES -->
+    <div class="info-card fade-up">
+
+        <h2>Key Responsibilities</h2>
+
+        <div class="services">
+
+            <div class="service-box">
+                <h3>Water Leakage Repair</h3>
+
+                <p>
+                    Detection and repair of damaged pipelines,
+                    leakage points, and water wastage issues.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Pipeline Maintenance</h3>
+
+                <p>
+                    Regular monitoring and maintenance of underground
+                    water distribution pipelines and drainage systems.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Water Quality Monitoring</h3>
+
+                <p>
+                    Ensuring safe and clean drinking water through
+                    regular quality inspections and testing.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Emergency Water Services</h3>
+
+                <p>
+                    Providing emergency water supply support
+                    during shortages, repairs, and maintenance activities.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICES PROVIDED -->
+    <div class="info-card fade-up">
+
+        <h2>Services Provided to Citizens</h2>
+
+        <p>
+            The Water Supply Department provides important public services
+            through the CivicWatch grievance management system:
+        </p>
+
+        <br>
+
+        <ul style="line-height:2; padding-left:20px; color:#444;">
+
+            <li>Online reporting of water leakage complaints</li>
+
+            <li>Pipeline damage monitoring and maintenance</li>
+
+            <li>Drainage overflow complaint handling</li>
+
+            <li>Water supply interruption tracking</li>
+
+            <li>Water quality inspection and issue reporting</li>
+
+            <li>Public grievance status tracking and updates</li>
+
+            <li>Emergency maintenance scheduling and notifications</li>
+
+        </ul>
+
+    </div>
+
+    <!-- IMPORTANCE -->
+    <div class="info-card fade-up">
+
+        <h2>Importance of the Department</h2>
+
+        <p>
+            Efficient water management is essential for public health,
+            sanitation, and sustainable urban development.
+            The Water Supply Department ensures safe drinking water availability
+            and proper maintenance of water infrastructure systems.
+        </p>
+
+        <p>
+            CivicWatch improves transparency and communication by enabling citizens
+            to report water-related problems instantly and monitor
+            government actions and maintenance progress in real-time.
+        </p>
+
+    </div>
+
+    <!-- REPORT BUTTON -->
+    <div class="btn-area">
+
+        <a href="{% url 'insertgrievance' %}" class="btn-primary">
+            Report Water Supply Issue
+        </a>
+
+    </div>
+
+</div>
+
+<!-- 🔷 Footer -->
+<footer class="footer">
+    <p>
+      &copy; 2026 CivicWatch — Government of Karnataka. All rights reserved.
+    </p>
+</footer>
+
+</body>
+</html>

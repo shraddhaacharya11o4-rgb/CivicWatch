@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>CivicWatch | Karnataka</title>
+
+  <!-- Django Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- 🔷 Navbar -->
+  <nav class="navbar">
+    <a href="{% url 'public_home' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+  </nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- ABOUT -->
+    <div class="info-card fade-up">
+
+        <h2>About Road Department</h2>
+
+        <p>
+            The Roads Department is one of the most important public infrastructure departments
+            responsible for the construction, maintenance, repair, and monitoring of roads,
+            highways, bridges, pavements, and traffic infrastructure across the city and rural areas.
+        </p>
+
+        <p>
+            The department ensures safe and smooth transportation for citizens by regularly
+            monitoring road conditions and resolving public complaints related to potholes,
+            damaged roads, drainage overflow, broken dividers, missing road signs,
+            and incomplete construction activities.
+        </p>
+
+        <p>
+            Through the CivicWatch platform, citizens can directly report road-related grievances
+            online by uploading complaint details, photographs, and exact locations.
+            Government officers can inspect issues, update maintenance status,
+            and monitor infrastructure progress in real-time.
+        </p>
+
+    </div>
+
+    <!-- KEY RESPONSIBILITIES -->
+    <div class="info-card fade-up">
+
+        <h2>Key Responsibilities</h2>
+
+        <div class="services">
+
+            <div class="service-box">
+                <!--<img src="{% static 'pothole.png' %}">-->
+                <h3>Pothole Repair</h3>
+                <p>
+                    Immediate identification and repair of potholes and damaged roads
+                    to ensure public safety and smooth transportation.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <!--<img src="{% static 'construction.png' %}">-->
+                <h3>Road Construction</h3>
+                <p>
+                    Planning and monitoring new road construction projects,
+                    flyovers, and public transport infrastructure.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <!--<img src="{% static 'traffic.png' %}">-->
+                <h3>Traffic Safety</h3>
+                <p>
+                    Installation of traffic signals, warning boards,
+                    speed breakers, and safety markings on public roads.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <!--<img src="{% static 'inspection.png' %}">-->
+                <h3>Infrastructure Inspection</h3>
+                <p>
+                    Regular road inspections and condition monitoring
+                    to identify damages and maintenance requirements.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICES PROVIDED -->
+    <div class="info-card fade-up">
+
+        <h2>Services Provided to Citizens</h2>
+
+        <p>
+            The Roads Department provides several important public services through the
+            CivicWatch grievance management system:
+        </p>
+
+        <br>
+
+        <ul style="line-height:2; padding-left:20px; color:#444;">
+
+            <li>Online reporting of potholes and road damages</li>
+
+            <li>Monitoring ongoing road construction projects</li>
+
+            <li>Street and highway maintenance tracking</li>
+
+            <li>Road safety inspections and traffic infrastructure monitoring</li>
+
+            <li>Public complaint tracking and grievance resolution updates</li>
+
+            <li>Bridge and pavement condition monitoring</li>
+
+            <li>Emergency repair notifications and maintenance scheduling</li>
+
+        </ul>
+
+    </div>
+
+    <!-- IMPORTANCE -->
+    <div class="info-card fade-up">
+
+        <h2>Importance of the Department</h2>
+
+        <p>
+            Efficient road infrastructure is essential for economic development,
+            emergency services, public transportation, and overall citizen safety.
+            The Roads Department contributes significantly to improving transportation quality,
+            reducing accidents, and maintaining better connectivity across urban and rural regions.
+        </p>
+
+        <p>
+            CivicWatch enhances transparency and accountability by allowing citizens
+            to actively participate in reporting infrastructure problems and tracking
+            government actions in real-time.
+        </p>
+
+    </div>
+
+    <!-- REPORT BUTTON -->
+    <div class="btn-area">
+
+        <a href="{% url 'insertgrievance' %}" class="btn-primary">
+            Report Road Issue
+        </a>
+
+    </div>
+
+</div>
+ <!-- 🔷 Footer -->
+  <footer class="footer">
+    <p>
+      &copy; 2026 CivicWatch — Government of Karnataka. All rights reserved.
+    </p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+    }
+
+    .star-rating input {
+    display: none;
+    }
+
+    .star-rating label {
+    font-size: 32px;
+    color: #ccc;
+    cursor: pointer;
+    }
+
+    .star-rating input:checked ~ label {
+    color: #f5b301;
+    }
+
+    .star-rating label:hover, .star-rating label:hover ~ label {
+    color: #f5b301;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a href="{% url 'showindex' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+  </nav>
+
+  <!-- ── Feedback Section ── -->
+  <section class="auth-page simp">
+    <div class="auth-card fade-up" style="max-width:500px;">
+      <h2>Feedback Form</h2>
+      <p class="subtitle">
+        Share your grievance resolution experience
+      </p>
+
+      <!-- Django Form -->
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Citizen Name</label>
+          <input type="text" name="t1" value="{{ username }}" readonly required>
+        </div>
+
+        <div class="form-group">
+          <label>Grievance ID</label>
+          <select name="t2" required>
+            <option value="" disabled selected>
+              -- Select Grievance --
+            </option>
+            {% for g in grievances %}
+            <option value="{{ g.grievance_id }}">
+              {{ g.grievance_id }} - {{ g.title }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Comments</label>
+          <textarea name="t4" placeholder="Tell us about your grievance resolution experience"
+                    minlength="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Feedback Date</label>
+          <input type="date" name="t5" id="t5" readonly required>
+        </div>
+
+        <div class="form-group">
+          <label>Rating</label>
+          <div class="star-rating">
+            <input type="radio" id="star5" name="t3" value="5">
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="t3" value="4">
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="t3" value="3">
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="t3" value="2">
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="t3" value="1">
+            <label for="star1">★</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Submit Feedback
+        </button>
+      </form>
+    </div>
+  </section>
+<script>
+    document.getElementById("t5").value = new Date().toISOString().split('T')[0];
+</script>
+  {% if msg %}
+  <script>
+    alert("{{ msg }}");
+  </script>
+  {% endif %}
+</body>
+</html>

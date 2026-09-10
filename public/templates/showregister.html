@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registered Users | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+
+    .user-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 25px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .user-table th {
+      background: #07072c;
+      color: white;
+      padding: 14px;
+      font-size: 14px;
+      border: 1px solid #1d1d4f;
+    }
+
+    .user-table td {
+      background: #ffffff;
+      color: #222;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #dcdcdc;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .user-table tr:hover td {
+      background: #f5f7fa;
+    }
+
+    .delete-btn {
+      background: #e63946;
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.3s;
+    }
+
+    .delete-btn:hover {
+      background: #c1121f;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+
+    <a href="{% url 'showindex' %}" class="logo">
+
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="{% url 'showindex' %}">Home</a></li>
+      <li><a href="{% url 'logcheck' %}" >Login</a></li>
+      <li><a href="{% url 'insertregister' %}" >Register</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+
+  </nav>
+
+  <!-- ── Registered Users Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:1400px;">
+
+      <h2>Registered Users</h2>
+
+      <p class="subtitle">
+        View and manage all registered users
+      </p>
+
+      <div style="overflow-x:auto; width:100%;">
+
+        <table class="user-table">
+
+          <tr>
+
+            <th>Name</th>
+
+            <th>Email</th>
+
+            <th>Contact</th>
+
+            <th>City</th>
+
+            <th>Address</th>
+
+            <th>Role</th>
+
+            <th>Delete</th>
+
+          </tr>
+
+          {% for i in regdict %}
+
+          <tr>
+
+            <td>{{ i.name }}</td>
+
+            <td>{{ i.email }}</td>
+
+            <td>{{ i.contact }}</td>
+
+            <td>{{ i.city }}</td>
+
+            <td>{{ i.address }}</td>
+
+            <td>{{ i.role }}</td>
+
+            <td>
+
+              <a href="{% url 'delreg' i.id %}" class="delete-btn">
+
+                Delete
+
+              </a>
+
+            </td>
+
+          </tr>
+
+          {% empty %}
+
+          <tr>
+
+            <td colspan="7">
+              No users found
+            </td>
+
+          </tr>
+
+          {% endfor %}
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Category | CivicWatch</title>
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    /* Drop-Down */
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+
+    .dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 10px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    border-bottom: 1px solid transparent;
+    }
+
+    .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: auto;
+    right: 0;
+    background-color: #111133;
+    min-width: 200px;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    }
+
+    .dropdown-content a {
+    color: white;
+    padding: 12px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    }
+
+    .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: black;
+    }
+
+    .dropdown:hover .dropdown-content {
+    display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a href="{% url 'showindex' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a href="{% url 'govt_home' %}" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn">Manage</a>
+          <div class="dropdown-content">
+            <a href="{% url 'insertdepartment' %}">Register Department</a>
+            <a href="{% url 'insertgrevcat' %}">Register Grievance Category</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" >View Status</a>
+          <div class="dropdown-content">
+            <a href="{% url 'viewdepartment' %}">Department List</a>
+            <a href="{% url 'viewgriev' %}">Grievance Status</a>
+            <a href="{% url 'viewgassign' %}">Assignments</a>
+            <a href="{% url 'viewgupdate' %}">View Updates</a>
+            <a href="{% url 'viewinmonitor' %}">Monitoring Records</a>
+            <a href="{% url 'viewfeed' %}">View Feedback </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <div class="dropdown">
+          <a class="dropbtn" title="More">☰</a>
+          <div class="dropdown-content">
+            <a href="{% url 'changepassword' %}">Change Password</a>
+            <a href="{% url 'logcheck' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ── Grievance Category Section ── -->
+  <section class="auth-page simp">
+
+    <div class="auth-card fade-up" style="max-width:500px;">
+
+      <h2>Grievance Category</h2>
+
+      <p class="subtitle">
+        Add grievance category details and priority level
+      </p>
+
+      <!-- Django Form -->
+      <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label>Category Name</label>
+          <input type="text" name="t1" placeholder="Enter category name" required minlength="2">
+        </div>
+
+        <div class="form-group">
+          <label>Department</label>
+          <select name="t2" required>
+            <option value="" disabled selected>-- Select Department --</option>
+            <option value="Road Department">Road Department</option>
+            <option value="Water Supply Board">Water Supply Board</option>
+            <option value="Electricity Department">Electricity Department</option>
+            <option value="Sanitation Department">Sanitation Department</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="t3" placeholder="Enter description" required minlength="5"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Priority Level</label>
+          <select name="t4" required>
+            <option value="" disabled selected>-- Select --</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          Submit
+        </button>
+
+      </form>
+
+    </div>
+
+  </section>
+
+</body>
+
+</html>

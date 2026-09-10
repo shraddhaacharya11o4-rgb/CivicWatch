@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>CivicWatch | Sanitation Department</title>
+
+  <!-- Django Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<!-- 🔷 Navbar -->
+<nav class="navbar">
+    <a href="{% url 'public_home' %}" class="logo">
+      <div class="logo-icon">
+        <img src="{% static 'logo.png' %}" width="70" height="50">
+      </div>
+      <div class="logo-text">
+        Civic Watch
+        <span>Government of Karnataka</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      {% include 'public_menu.html' %}
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+
+    <!-- ABOUT -->
+    <div class="info-card fade-up">
+
+        <h2>About Sanitation Department</h2>
+
+        <p>
+            The Sanitation Department is responsible for maintaining cleanliness,
+            waste management, public hygiene, and sanitation infrastructure
+            across urban and rural regions.
+        </p>
+
+        <p>
+            The department handles complaints related to garbage collection,
+            waste disposal, drainage cleaning, public area cleanliness,
+            sewage overflow, and improper waste management activities.
+        </p>
+
+        <p>
+            Through the CivicWatch platform, citizens can report sanitation-related
+            issues online by uploading complaint details, photographs,
+            and exact locations for faster monitoring and resolution.
+        </p>
+
+    </div>
+
+    <!-- KEY RESPONSIBILITIES -->
+    <div class="info-card fade-up">
+
+        <h2>Key Responsibilities</h2>
+
+        <div class="services">
+
+            <div class="service-box">
+                <h3>Garbage Collection</h3>
+
+                <p>
+                    Regular collection and disposal of household,
+                    commercial, and public waste materials.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Drainage Cleaning</h3>
+
+                <p>
+                    Cleaning and maintenance of drainage systems
+                    to prevent waterlogging and sewage overflow.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Public Area Maintenance</h3>
+
+                <p>
+                    Ensuring cleanliness in streets, parks,
+                    bus stops, and other public places.
+                </p>
+            </div>
+
+            <div class="service-box">
+                <h3>Waste Management Monitoring</h3>
+
+                <p>
+                    Monitoring waste disposal systems and sanitation
+                    infrastructure to improve environmental safety.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- SERVICES PROVIDED -->
+    <div class="info-card fade-up">
+
+        <h2>Services Provided to Citizens</h2>
+
+        <p>
+            The Sanitation Department provides several important public services
+            through the CivicWatch grievance management system:
+        </p>
+
+        <br>
+
+        <ul style="line-height:2; padding-left:20px; color:#444;">
+
+            <li>Online reporting of garbage collection issues</li>
+
+            <li>Monitoring drainage cleaning and sewage maintenance</li>
+
+            <li>Public cleanliness complaint management</li>
+
+            <li>Waste disposal and sanitation tracking</li>
+
+            <li>Real-time grievance tracking and complaint updates</li>
+
+            <li>Public hygiene monitoring and inspection services</li>
+
+            <li>Emergency sanitation maintenance notifications</li>
+
+        </ul>
+
+    </div>
+
+    <!-- IMPORTANCE -->
+    <div class="info-card fade-up">
+
+        <h2>Importance of the Department</h2>
+
+        <p>
+            Efficient sanitation management is essential for public health,
+            environmental protection, and maintaining hygienic living conditions.
+            The Sanitation Department contributes significantly to improving
+            cleanliness, reducing pollution, and ensuring safe public spaces.
+        </p>
+
+        <p>
+            CivicWatch improves transparency and communication by enabling citizens
+            to report sanitation problems instantly and monitor
+            government cleaning and maintenance activities in real-time.
+        </p>
+
+    </div>
+
+    <!-- REPORT BUTTON -->
+    <div class="btn-area">
+
+        <a href="{% url 'insertgrievance' %}" class="btn-primary">
+            Report Sanitation Issue
+        </a>
+
+    </div>
+
+</div>
+
+<!-- 🔷 Footer -->
+<footer class="footer">
+    <p>
+      &copy; 2026 CivicWatch — Government of Karnataka. All rights reserved.
+    </p>
+</footer>
+
+</body>
+</html>

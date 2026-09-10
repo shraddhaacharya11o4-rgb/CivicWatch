@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to the Smart Public Grievance and Infrastructure Monitoring System - Government of Karnataka.">
+  <title>Login | Karnataka Grievance Portal</title>
+
+    <!-- Django Static CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+   .password-box{
+    position: relative;
+  }
+
+  .password-box input{
+    width: 100%;
+    padding-right: 45px;
+    box-sizing: border-box;
+  }
+
+  .toggle-password{
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+  }
+
+  .toggle-password:hover{
+    color: #d4a843;
+  }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navbar ── -->
+  <nav class="navbar">
+    <a href="{% url 'showindex' %}" class="logo">
+      <div class="logo-icon"><img src="{% static 'logo.png' %}" width="70" height="50"></div>
+      <div class="logo-text">Civic Watch<span>Government of Karnataka</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="{% url 'showindex' %}">Home</a></li>
+
+      <li><a href="{% url 'insertregister' %}" class="btn-register">Register</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── Login Section ── -->
+  <section class="auth-page login-page">
+    <div class="auth-card fade-up">
+
+      <h2>Welcome Login</h2>
+      <p class="subtitle">Sign in to your Karnataka Grievance Portal account</p>
+
+      <form action="{% url 'logcheck' %}" method="post" id="loginForm">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="email">User Name </label>
+          <input type="text" id="email" name="t1" value="{{ email }}" placeholder="Enter Email address" pattern="^[a-z0-9_+.-]+@[a-z]+\.[a-z]{2,3}$" title="Enter registered email address" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-box">
+            <input type="password" id="password" name="t2"
+               placeholder="Enter your password"
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,10}$"
+               title="Password must be registered." required>
+            <button type="button" class="toggle-password" onclick="togglePassword()">
+            <i id="eyeIcon" class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+       <div class="form-options">
+
+          <input type="hidden" name="t3" value="user">
+
+          <a href="{% url 'forgotpassword' %}">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-submit">Log In</button>
+      </form>
+
+      <div class="divider"><span>or</span></div>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="{% url 'insertregister' %}">Create Account</a>
+      </div>
+    </div>
+  </section>
+<script>
+
+const password = document.getElementById("password");
+const eye = document.querySelector(".toggle-password");
+
+// Show/Hide password
+function togglePassword() {
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    }
+}
+</script>
+
+</body>
+</html>
