@@ -14,6 +14,7 @@ env/
 # Django
 db.sqlite3
 *.sqlite3
+civicwatch_backup.sql
 
 # User uploaded files
 media/
